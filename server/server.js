@@ -4,7 +4,7 @@ const port = 3000
 
 app.use(express.json())
 
-app.post('/', (req, res) => {
+app.post('/logs', (req, res) => {
   console.log(req.body)
 
   res.json({
