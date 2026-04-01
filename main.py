@@ -2,7 +2,6 @@ import subprocess
 import requests
 import json
 import time
-import os
 import netifaces
 
 def get_network_info():
@@ -20,7 +19,7 @@ def get_network_info():
 CMD = ["journalctl", "-f", "-o", "json"]
 HOST = 'localhost'
 PORT = '3000'
-URL = f'http://{HOST}:{PORT}'
+URL = f'http://{HOST}:{PORT}/logs'
 BATCH_SIZE = 5
 KEYS = [
     '__REALTIME_TIMESTAMP',
@@ -40,7 +39,6 @@ def send_logs(logs : dict[str, str]):
     for attempt in range(3):
         try:
             response = requests.post(URL,json=logs,timeout=3)
-
             if response.status_code == 200:
                 return True
         
