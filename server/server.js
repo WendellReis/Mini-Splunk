@@ -1,18 +1,19 @@
-const express = require('express')
-const app = express()
-const port = 3000
+import express from 'express';
+import logRoutes from './routes/logRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
-app.use(express.json())
+const app = express();
+const port = 3000;
 
-app.post('/logs', (req, res) => {
-  console.log(req.body)
+app.use(express.json());
 
-  res.json({
-    message: 'Ok',
-    dados: req.body
-  })
-})
+app.use('/log', logRoutes);
+app.use('/auth', authRoutes);
+
+app.get('/', (req, res) => {
+  res.json({'MESSAGE': 'Foi'});
+});
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`)
+  console.log(`Server listening on port ${port}`);
 })

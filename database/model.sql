@@ -1,10 +1,10 @@
-CREATE TABLE USERS (
+CREATE TABLE Users (
     id INTEGER PRIMARY KEY,
     login VARCHAR(50),
     password VARCHAR(100)
 );
 
-CREATE TABLE LOGS (
+CREATE TABLE Logs (
     id INTEGER NOT NULL AUTO_INCREMENT,
     ip VARCHAR(20),
     timestamp DATETIME,
@@ -16,5 +16,6 @@ CREATE TABLE LOGS (
     unit VARCHAR(100),
     boot_id VARCHAR(100),
     mac VARCHAR(20),
+    priority TINYINT,
     PRIMARY KEY(id)
 );

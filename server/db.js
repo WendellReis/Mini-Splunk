@@ -1,20 +1,10 @@
-const argon2 = require("argon2");
+import mysql from 'mysql2/promise';
 
-async function test() {
-  try {
-    const password = "minhaSenhaSegura123";
-
-    // Gerar hash
-    const hash = await argon2.hash(password);
-    console.log("Hash:", hash.length);
-
-    // Verificar senha
-    const isValid = await argon2.verify(hash, password);
-    console.log("Senha válida?", isValid);
-
-  } catch (err) {
-    console.error("Erro:", err);
-  }
-}
-
-test();
+export const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'app',
+    password: 'mini-splunk-db',
+    database: 'logdb',
+    connectionLimit: 10,
+    queueLimit: 0
+});
