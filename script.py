@@ -5,6 +5,7 @@ import time
 import netifaces
 import logging
 import sys
+from datetime import datetime, timezone
 
 logging.basicConfig(
     level=logging.INFO,
@@ -34,7 +35,7 @@ DATA = {
         "MAC": "mac",
         "SYSLOG_IDENTIFIER": "service",
         "_COMM": "process",
-        "_SYSTEMD_USER_UNIT": "unit",
+        "_SYSTEMD_UNIT": "unit",
         "_UID": "user_id",
         "PRIORITY": "priority",
         "MESSAGE": "message"
@@ -67,7 +68,6 @@ def main():
     except FileNotFoundError as e:
         logging.error('Erro: Arquivo de configuração ausente.')
     
-
     process = subprocess.Popen(
         CMD,
         stdout=subprocess.PIPE,
@@ -82,6 +82,8 @@ def main():
         log['IP'] = ip
         log['MAC'] = mac
         
+        log['__REALTIME_TIMESTAMP'] = datetime.fromtimestamp(int(log['__REALTIME_TIMESTAMP']) / 1_000_000, tz=timezone.utc)
+        log['__REALTIME_TIMESTAMP'] = log['__REALTIME_TIMESTAMP'].isoformat()
         aux = {DATA[k]: v for k, v in log.items() if k in DATA}
         buffer.append(aux)
 

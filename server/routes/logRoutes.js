@@ -13,7 +13,8 @@ router.post('/', async (req, res) => {
     }
 
     console.log(`[INFO] Rebeidos ${data.length} logs de mac=${data[0]['mac']} ip=${data[0]['ip']}`);
-    res.json({'MESSAGE': 'SUCESS'});
+    const result = await insertLog(data);
+    res.json({'MESSAGE': `SUCESSO`});
 })
 
 export default router;
