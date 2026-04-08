@@ -45,6 +45,7 @@ def send_logs(logs : dict[str, str], url):
     for attempt in range(3):
         try:
             response = requests.post(url,json=logs,timeout=3)
+            logging.info(f'Status: {response.status_code}')
             if response.status_code == 200:
                 return True
         
