@@ -18,8 +18,7 @@ router.post('/', async (req, res) => {
         });
     }
 
-    const first = data[0] || {}
-    console.log(`[INFO] Rebeidos ${data.length} logs de mac=${first['mac'] || 'N/A'} ip=${first['ip'] || 'N/A'}`);
+    console.log(`[INFO] Rebeidos ${data.length} logs de mac=${data[0]['mac'] || 'N/A'} ip=${data[0]['ip'] || 'N/A'}`);
 
     const result = await insertLogs(data);
 

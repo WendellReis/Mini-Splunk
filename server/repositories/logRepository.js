@@ -1,5 +1,6 @@
 import { pool } from "../db.js";
 import errorMessage from "./error.js";
+import levels from "./levels.js";
 
 export async function insertLogs(logs) {
     try {
@@ -56,7 +57,7 @@ export async function insertLogs(logs) {
 
 export async function getLogs() {
     try {
-        const sql = 'SELECT * FROM Logs';
+        const sql = 'SELECT * FROM Logs ORDER BY timestamp DESC';
         const [rows] = await pool.execute(sql);
 
         return {
