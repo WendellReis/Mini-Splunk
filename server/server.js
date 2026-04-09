@@ -11,7 +11,7 @@ app.use('/log', logRoutes);
 app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
-  res.json({'MESSAGE': 'Foi'});
+  res.json({ 'MESSAGE': 'Foi' });
 });
 
 app.listen(port, () => {

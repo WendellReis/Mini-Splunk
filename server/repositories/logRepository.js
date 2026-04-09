@@ -1,9 +1,10 @@
 import { pool } from "../db.js";
+import errorMessage from "./error.js";
 
 export async function insertLogs(logs) {
     try {
         const values = [];
-    
+
         logs.forEach(item => {
             values.push(
                 item.ip,
@@ -48,18 +49,21 @@ export async function insertLogs(logs) {
             insertId: result.insertId
         };
 
-    } catch(err) {
-        console.error('[DB ERROR]', err.code);
-        return {
-            success: false,
-            error: err.code
-        };
+    } catch (err) {
+        return errorMessage(err);
     }
 }
 
 export async function getLogs() {
-    const sql = 'SELECT * FROM Logs';
+    try {
+        const sql = 'SELECT * FROM Logs';
+        const [rows] = await pool.execute(sql);
 
-    const [rows] = await pool.execute(sql);
-    return rows
+        return {
+            success: true,
+            data: rows,
+        };
+    } catch (err) {
+        return errorMessage(err);
+    }
 }
