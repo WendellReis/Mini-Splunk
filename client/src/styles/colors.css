@@ -1,6 +1,8 @@
 :root {
-    --purple: #621f92,
-    --background-color: #fbf5ff,
-    --silver: #dbdbdb,
-    --black: #1e1624
+    --purple: #8e31d1;
+    --light-purple: #a25bd4;
+    --background-color: #fdf9ff;
+    --silver: #919191;
+    --black: #1e1623;
+    --white: #fdfcff;
 }
