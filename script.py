@@ -87,7 +87,7 @@ def main():
         log['__REALTIME_TIMESTAMP'] = log['__REALTIME_TIMESTAMP'].isoformat()
         aux = {DATA[k]: v for k, v in log.items() if k in DATA}
         buffer.append(aux)
-
+        
         if len(buffer) >= batch_size:
             logging.info(f"Enviando lote com {len(buffer)} logs")
             send_logs(buffer, url)
