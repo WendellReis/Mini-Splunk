@@ -1,6 +1,7 @@
 import express from 'express';
 import logRoutes from './routes/logRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import cors from 'cors';
 
 const app = express();
@@ -11,10 +12,7 @@ app.use(cors());
 
 app.use('/log', logRoutes);
 app.use('/auth', authRoutes);
-
-app.get('/', (req, res) => {
-  res.json({ 'MESSAGE': 'Foi' });
-});
+app.use('/user', userRoutes);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

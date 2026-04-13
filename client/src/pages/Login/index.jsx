@@ -1,16 +1,40 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './styles.css'
 import logo from '../../assets/logo.png'
-import { useState } from 'react'
 
 function Login() {
+  const apiUrl = import.meta.env.VITE_API_URL
+
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+
+  const navigate = useNavigate()
+
+  function validateCredentials() {
+    if(user === '' || password === '') {
+      setError('Todos os campos devem ser preenchidos')
+      return false
+    }
+ 
+    if (password.length < 5) {
+      setError('A senha deve ter mais de 4 caracteres')
+      return false
+    }
+
+    return true
+  }
 
   async function handleLogin(e) {
     e.preventDefault()
 
+    if(!validateCredentials()) {
+      return
+    }
+
     try {
-      const response = await fetch('http://localhost:3000/auth/login', {
+      const response = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -22,15 +46,19 @@ function Login() {
       })
 
       const data = await response.json()
-
+      
       if (data.success) {
-        console.log(data.token)
+        if (data.firstLogin) {
+          navigate('/firstLogin')
+        } else {
+          navigate('/home')
+        }
       } else {
-        console.log(data.message)
+        setError(data.message)
       }
 
     } catch (err) {
-      console.log('Erro na requisição:', err)
+      setError(`Erro na requisição: ${error}`)
     }
   }
 
@@ -42,6 +70,8 @@ function Login() {
     <form className="login-form" onSubmit={handleLogin}>
       <p className="login-form-title">Autenticação</p>
       <p className="login-form-subtitle">Entre com as suas credencias para acessar</p>
+
+      {error && <p className='login-error-message'>{error}</p>}
 
       <p className="login-form-label">USUÁRIO</p>
       <input

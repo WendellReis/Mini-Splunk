@@ -2,14 +2,14 @@ import { pool } from "../db.js";
 import errorMessage from "./error.js";
 import argon2 from 'argon2';
 
-async function emptyUsers() {
+export async function emptyUsers() {
     try {
         const sql = 'SELECT COUNT(*) AS total FROM Users';
         const [rows] = await pool.execute(sql);
 
         return rows[0].total === 0;
     } catch (err) {
-        console.log('Erro ao verificar usuario', err);
+        console.log('[INFO] Erro ao verificar usuario', err);
     }
     return false;
 }

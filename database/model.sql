@@ -1,7 +1,8 @@
 CREATE TABLE Users (
-    id INTEGER PRIMARY KEY,
+    id INTEGER NOT NULL AUTO_INCREMENT,
     login VARCHAR(50),
-    password VARCHAR(100)
+    password VARCHAR(100),
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE Logs (

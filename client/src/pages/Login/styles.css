@@ -84,3 +84,11 @@
     background-color: var(--light-purple);
     cursor: pointer;
 }
+
+.login-error-message {
+    color: rgb(205, 1, 1);
+    font-weight: bold;
+    margin:3px;
+    font-size: 15px;
+    text-align: justify;
+}

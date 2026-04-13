@@ -1,5 +1,4 @@
 import express from 'express';
-import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 import { verifyLogin } from '../repositories/loginRepository.js';
 
@@ -12,12 +11,14 @@ router.post('/login', async (req, res) => {
 
     const result = await verifyLogin(user, password);
     if (!result.success) {
+        console.log(`[AUTH] Falha na autenicação: ${user} (${req.ip})`)
         return res.status(401).json({
             success: false,
             message: 'Falha na autenticação'
         });
     }
 
+    console.log(`[AUTH] Autenticação concluída: ${user} (${req.ip})`)
     if (result.firstLogin) {
         return res.status(200).json({
             success: true,
@@ -26,12 +27,15 @@ router.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-        { user: result.user.login },
+        { user },
         SECRET,
         { expiresIn: '1h' }
     );
 
-    return res.status(200).json({ token });
+    return res.status(200).json({ 
+        success: true, 
+        token 
+    });
 })
 
 export default router;
