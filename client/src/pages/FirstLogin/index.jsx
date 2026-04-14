@@ -55,7 +55,7 @@ function FirstLogin() {
             }
 
         } catch (err) {
-            setError(`Erro na requisição: ${error}`)
+            setError(`Erro na requisição: ${err}`)
         }
     }
 

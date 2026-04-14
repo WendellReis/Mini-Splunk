@@ -1,10 +1,11 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import { verifyLogin } from '../repositories/loginRepository.js';
 
-const router = express.Router();
+dotenv.config();
 
-const SECRET = 'my-log-server';
+const router = express.Router();
 
 router.post('/login', async (req, res) => {
     const { user, password } = req.body;
@@ -27,14 +28,17 @@ router.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-        { user },
-        SECRET,
+        {
+            userId: result.userId,
+            user
+        },
+        process.env.JWT_SECRET,
         { expiresIn: '1h' }
     );
 
-    return res.status(200).json({ 
-        success: true, 
-        token 
+    return res.status(200).json({
+        success: true,
+        token
     });
 })
 

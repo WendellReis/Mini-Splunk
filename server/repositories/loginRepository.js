@@ -30,7 +30,7 @@ export async function verifyLogin(user, password) {
             };
         }
 
-        const sql = 'SELECT password from Users WHERE login = ?';
+        const sql = 'SELECT id, password from Users WHERE login = ?';
         const [rows] = await pool.execute(sql, [user]);
 
         if (rows.length === 0) {
@@ -43,9 +43,7 @@ export async function verifyLogin(user, password) {
         if (await argon2.verify(rows[0].password, password)) {
             return {
                 success: true,
-                user: {
-                    login: user
-                }
+                userId: rows[0].id
             }
         } else {
             return {

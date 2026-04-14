@@ -51,6 +51,7 @@ function Login() {
         if (data.firstLogin) {
           navigate('/firstLogin')
         } else {
+          localStorage.setItem('token', data.token)
           navigate('/home')
         }
       } else {
@@ -58,7 +59,7 @@ function Login() {
       }
 
     } catch (err) {
-      setError(`Erro na requisição: ${error}`)
+      setError(`Erro na requisição: ${err}`)
     }
   }
 
