@@ -14,16 +14,16 @@ logging.basicConfig(
 )
 
 def get_network_info():
-    for iface in netifaces.interfaces():
-        addrs = netifaces.ifaddresses(iface)
+    while(True):
+        for iface in netifaces.interfaces():
+            addrs = netifaces.ifaddresses(iface)
 
-        if netifaces.AF_INET in addrs:
-            ip = addrs[netifaces.AF_INET][0]['addr']
-            mac = addrs[netifaces.AF_LINK][0]['addr']
-            if ip != "127.0.0.1":
-                return ip, mac
-
-    return None, None
+            if netifaces.AF_INET in addrs:
+                ip = addrs[netifaces.AF_INET][0]['addr']
+                mac = addrs[netifaces.AF_LINK][0]['addr']
+                if ip != "127.0.0.1":
+                    return ip, mac
+        time.sleep(3)
 
 CMD = ["journalctl", "-f", "-o", "json"]
 
@@ -76,10 +76,10 @@ def main():
     )
 
     buffer = []
-    ip, mac = get_network_info()
 
     for line in process.stdout:
         log = json.loads(line)
+        ip, mac = get_network_info()
         log['IP'] = ip
         log['MAC'] = mac
         
