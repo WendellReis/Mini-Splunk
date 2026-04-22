@@ -42,4 +42,31 @@ router.post('/login', async (req, res) => {
     });
 })
 
+router.get('/validate', async (req, res) => {
+    try {
+        const authHead = req.headers.authorization;
+
+        if(!authHead) {
+            return res.status(401).json({
+                success: false,
+                message: 'Token não informado'
+            });
+        }
+
+        const token = authHead.split(' ')[1];
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Acesso Autorizado'
+        });
+    } catch(err) {
+        return res.status(401).json({
+            success: false,
+            error: 'Token Inválido ou Expirado'
+        });
+    }
+});
+
 export default router;

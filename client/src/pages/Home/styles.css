@@ -1,0 +1,15 @@
+.home-main-header {
+    padding-top:10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.home-button-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 500px;
+    margin-left: 500px;
+}

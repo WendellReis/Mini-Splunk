@@ -1,5 +1,6 @@
 import express from 'express';
 import { insertLogs, getLogs } from '../repositories/logRepository.js';
+import authMiddleware from './authMiddleware.js';
 
 const router = express.Router()
 
@@ -36,7 +37,7 @@ router.post('/', async (req, res) => {
     });
 });
 
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
     const result = await getLogs();
 
     if (!result.success) {
